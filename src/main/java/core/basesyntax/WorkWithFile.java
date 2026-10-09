@@ -33,7 +33,7 @@ public class WorkWithFile {
                 content.merge(type, Integer.parseInt(value), Integer::sum);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Can't read data from the file " + fileName, e);
         }
         int supply = content.get(SUPPLY);
         int buy = content.get(BUY);
@@ -51,7 +51,7 @@ public class WorkWithFile {
                 bufferedWriter.newLine();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Can't write data to the file " + fileName, e);
         }
     }
 }
