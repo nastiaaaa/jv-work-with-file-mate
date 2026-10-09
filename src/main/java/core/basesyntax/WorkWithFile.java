@@ -18,15 +18,13 @@ public class WorkWithFile {
     private static final String SUPPLY = "supply";
     private static final String BUY = "buy";
 
-    private final Map<String, Integer> content = new HashMap<>();
-
     public void getStatistic(String fromFileName, String toFileName) {
-        content.clear();
-        getContent(fromFileName);
-        fillFileWithResult(toFileName);
+        Map<String, Integer> content = getContent(fromFileName);
+        fillFileWithResult(toFileName, content);
     }
 
-    private void getContent(String fileName) {
+    private Map<String, Integer> getContent(String fileName) {
+        Map<String, Integer> content = new HashMap<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -40,9 +38,10 @@ public class WorkWithFile {
         int supply = content.get(SUPPLY);
         int buy = content.get(BUY);
         content.put(RESULT, supply - buy);
+        return content;
     }
 
-    private void fillFileWithResult(String fileName) {
+    private void fillFileWithResult(String fileName, Map<String, Integer> content) {
         String[] reportOrder = new String[]{SUPPLY, BUY, RESULT};
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName))) {
             for (String key : reportOrder) {
